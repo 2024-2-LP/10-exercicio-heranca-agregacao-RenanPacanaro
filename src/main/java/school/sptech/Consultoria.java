@@ -118,4 +118,46 @@ public class Consultoria {
     }
 
 
+    public List<Desenvolvedor> buscarPorTecnologia(String tecnologia) {
+        List<Desenvolvedor> desenvolvedoresFiltrados = new ArrayList<>();
+
+        if (desenvolvedores != null && tecnologia != null) {
+            for (int i = 0; i < desenvolvedores.size(); i++) {
+                Desenvolvedor desenvolvedordaVez = desenvolvedores.get(i);
+                if(desenvolvedordaVez instanceof DesenvolvedorWeb){
+                    if(((DesenvolvedorWeb) desenvolvedordaVez).getFrontend().contains(tecnologia)){
+                        desenvolvedoresFiltrados.add(desenvolvedordaVez);
+                    }
+                    if(((DesenvolvedorWeb) desenvolvedordaVez).getSgbd().contains(tecnologia)){
+                        desenvolvedoresFiltrados.add(desenvolvedordaVez);
+                    }
+                    if (((DesenvolvedorWeb) desenvolvedordaVez).getBackend().contains(tecnologia)){
+                        desenvolvedoresFiltrados.add(desenvolvedordaVez);
+                    }
+                }
+                if(desenvolvedordaVez instanceof DesenvolvedorMobile){
+                    if(((DesenvolvedorMobile) desenvolvedordaVez).getPlataforma().contains(tecnologia)){
+                        desenvolvedoresFiltrados.add(desenvolvedordaVez);
+                    }
+                    if(((DesenvolvedorMobile) desenvolvedordaVez).getLinguagem().contains(tecnologia)){
+                        desenvolvedoresFiltrados.add(desenvolvedordaVez);
+                    }
+                }
+            }
+        }
+
+        return desenvolvedoresFiltrados;
+    }
+
+    public Double getTotalSalariosPorTecnologia(String tecnologia){
+        Double salario = 0.0;
+        List<Desenvolvedor> tecnologias = buscarPorTecnologia(tecnologia);
+        for (Desenvolvedor desenvolvedor : tecnologias){
+            salario += desenvolvedor.calcularSalario();
+        }
+
+        return salario;
+    }
+
+
 }
